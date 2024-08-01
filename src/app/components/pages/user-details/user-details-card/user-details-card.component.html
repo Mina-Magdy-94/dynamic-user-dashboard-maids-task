@@ -1,0 +1,27 @@
+<div class="user-card-details">
+  <div class="img-container">
+    <figure>
+      <img [src]="user?.avatar" [alt]="user?.first_name + ' avatar'" />
+      <figcaption class="primary-text">
+        {{ user?.first_name }} {{ user?.last_name }}
+      </figcaption>
+    </figure>
+  </div>
+  <div class="text-container">
+    <p class="seconadary-text">
+      <span class="primary-text">Id : </span>{{ user?.id }}
+    </p>
+    <p class="seconadary-text">
+      <span class="primary-text">First Name : </span>{{ user?.first_name }}
+    </p>
+    <p class="seconadary-text">
+      <span class="primary-text">Last Name : </span>{{ user?.last_name }}
+    </p>
+    <p class="seconadary-text">
+      <span class="primary-text">email : </span>
+      <a class="email-link" [href]="'mailto:' + user?.email">{{
+        user?.email
+      }}</a>
+    </p>
+  </div>
+</div>

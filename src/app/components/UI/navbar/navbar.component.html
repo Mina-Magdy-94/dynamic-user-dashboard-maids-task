@@ -1,1 +1,16 @@
-<p>navbar works!</p>
+<mat-toolbar [ngStyle]="{ 'justify-content': 'space-between' }" color="primary">
+  <span (click)="backToUsersList()" class="logo">Maid Task</span>
+  <div class="input-container" *ngIf="!id">
+    <mat-form-field [ngStyle]="{ position: 'relative', top: '5px' }">
+      <mat-label>User ID</mat-label>
+      <input
+        matInput
+        (input)="onInputAllowNumbersOnly($event)"
+        [value]="searchByIdInputValue"
+        type="text"
+        maxlength="4"
+        placeholder="Search by Id"
+      />
+    </mat-form-field>
+  </div>
+</mat-toolbar>

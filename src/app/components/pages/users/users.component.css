@@ -30,10 +30,10 @@
   }
 
   .users-paginator-container {
-    width: 90%;
-    border: 2px solid var(--primary-color);
-    padding: 5px;
-    margin-inline: auto;
+    /* width: 90%; */
+    /* border: 2px solid var(--primary-color); */
+    /* padding: 5px; */
+    /* margin-inline: auto; */
   }
 }
 

@@ -21,6 +21,13 @@ import { PaginatorComponent } from './components/UI/paginator/paginator.componen
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ScaleOnHoverDirective } from './directives/scale-on-hover.directive';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { FormsModule } from '@angular/forms';
+import { UserDetailsCardComponent } from './components/pages/user-details/user-details-card/user-details-card.component';
+import { viewedUsersReducer } from './store/viewed-users.reducer';
+import { ViewedUsersEffects } from './store/viewed-users.effects';
 
 @NgModule({
   declarations: [
@@ -31,11 +38,13 @@ import { ScaleOnHoverDirective } from './directives/scale-on-hover.directive';
     NavbarComponent,
     UserCardComponent,
     PaginatorComponent,
-    ScaleOnHoverDirective
+    ScaleOnHoverDirective,
+    UserDetailsCardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatCardModule,
@@ -43,8 +52,14 @@ import { ScaleOnHoverDirective } from './directives/scale-on-hover.directive';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatToolbarModule,
-    StoreModule.forRoot({ user: userReducer }),
-    EffectsModule.forRoot([UserEffects]),
+    MatInputModule,
+    MatFormFieldModule,
+    MatSnackBarModule,
+    StoreModule.forRoot({
+      user: userReducer,
+      viewedUsers: viewedUsersReducer
+    }),
+    EffectsModule.forRoot([UserEffects, ViewedUsersEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]

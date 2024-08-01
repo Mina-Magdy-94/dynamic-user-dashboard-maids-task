@@ -2,10 +2,16 @@
   <mat-spinner></mat-spinner>
 </div>
 <div *ngIf="!(isLoading$ | async)">
-  <div *ngIf="error$ | async as error" class="error-message">
-    <p>{{ error }}</p>
+  <div
+    *ngIf="(error$ | async) && !(usersToShow$ | async)?.length"
+    class="error-message"
+  >
+    <p>{{ error$ | async }}</p>
   </div>
-  <div class="users-paginator-container" *ngIf="(usersToShow$ | async)?.length">
+  <div
+    class="users-paginator-container"
+    *ngIf="(usersToShow$ | async)?.length && !(error$ | async)"
+  >
     <ul class="users-container">
       <li class="card-container" *ngFor="let user of usersToShow$ | async">
         <app-user-card [user]="user"></app-user-card>

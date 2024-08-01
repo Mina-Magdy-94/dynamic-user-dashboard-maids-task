@@ -15,12 +15,12 @@ import { selectAllUsers, selectCurrentPagination, selectUsersToShow, selectPagin
 export class UsersComponent implements OnInit {
   allUsers$: Observable<User[][]>;
   usersToShow$: Observable<User[]>;
+
   isLoading$: Observable<boolean>;
   error$: Observable<string | null>;
 
   paginationList$!: Observable<PaginationInfo[] | null>
   currentPagination$!: Observable<PaginationInfo | null | undefined>
-
 
 
   constructor(private store: Store<AppState>) {
@@ -30,23 +30,10 @@ export class UsersComponent implements OnInit {
     this.error$ = this.store.select(state => state.user.error);
     this.paginationList$ = this.store.select(selectPaginationList);
     this.currentPagination$ = this.store.select(selectCurrentPagination);
-    // this.paginationSubscription = this.store.select(paginationState).subscribe((state) => {
-    //   this.pagination$ = state
-    // });
-
   }
 
   ngOnInit(): void {
     this.store.dispatch(loadUsers({ pageNumber: 1 }));
-    // this.paginationService.assignPaginationData()
   }
 
-
-
-
-
-
-  // getSecondPage(page: number) {
-  //   this.store.dispatch(loadUsers({ page }));
-  // }
 }

@@ -11,6 +11,15 @@ export interface ApiResponse {
   total_pages: number;
 }
 
+
+export interface GetUserByIdResponse {
+  data: User,
+  support: {
+    url: string,
+    text: string
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,7 +34,7 @@ export class UserService {
     return this.http.get<ApiResponse>(`${this.apiUrl}?page=${pageNumber}`);
   }
 
-  getUserById(id: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${id}`);
+  getUserById(id: string): Observable<GetUserByIdResponse> {
+    return this.http.get<GetUserByIdResponse>(`${this.apiUrl}/${id}`);
   }
 }

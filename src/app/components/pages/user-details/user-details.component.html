@@ -1,1 +1,20 @@
-<p>user-details works!</p>
+<div class="user-details-container">
+  <button mat-raised-button color="primary" (click)="onClickBackToUsersList()">
+    Back to Users List
+  </button>
+
+  <div
+    *ngIf="isLoading$ | async"
+    class="loading-spinner"
+    class="spinner-container"
+  >
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div [ngStyle]="{ width: '100%' }" *ngIf="!(isLoading$ | async)">
+    <app-user-details-card
+      *ngIf="user$ | async"
+      [user]="user$ | async"
+    ></app-user-details-card>
+  </div>
+</div>

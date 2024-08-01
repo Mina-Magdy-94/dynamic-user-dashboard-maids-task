@@ -6,8 +6,10 @@
       class="example-header-image"
       mat-card-avatar
     />
-    <mat-card-title>{{ user.first_name }}</mat-card-title>
-    <mat-card-subtitle>{{ user.last_name }}</mat-card-subtitle>
+    <mat-card-title class="primary-text">{{ user.first_name }}</mat-card-title>
+    <mat-card-subtitle [ngStyle]="{ color: 'var(--secondary-color)' }">{{
+      user.last_name
+    }}</mat-card-subtitle>
   </mat-card-header>
   <img
     mat-card-image
@@ -17,12 +19,27 @@
   />
   <div [ngStyle]="{ 'padding-bottom': '7px' }">
     <mat-card-content>
-      <p><span>id :</span> {{ user.id }}</p>
-      <p><span>First Name :</span> {{ user.first_name }}</p>
-      <p><span>Last Name :</span> {{ user.last_name }}</p>
-      <p>
-        <span>email :</span>
-        <a [href]="'mailto:' + user.email">{{ user.email }}</a>
+      <ng-container
+        *ngFor="
+          let item of [
+            { name: 'id', value: user.id },
+            { name: 'First Name', value: user.first_name },
+            { name: 'Last Name', value: user.last_name }
+          ]
+        "
+      >
+        <p class="primary-text">
+          <span class="seconadary-text">{{ item.name }} :</span>
+          {{ item.value }}
+        </p>
+      </ng-container>
+      <p class="primary-text">
+        <span class="seconadary-text"
+          >email :
+          <a class="email-link" [href]="'mailto:' + user.email">{{
+            user.email
+          }}</a>
+        </span>
       </p>
     </mat-card-content>
     <mat-card-actions>
