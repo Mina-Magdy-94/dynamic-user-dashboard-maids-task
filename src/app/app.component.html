@@ -1,12 +1,1 @@
-<button (click)="getSecondPage(2)">page 2</button>
-
-<ng-container *ngIf="(users$ | async)?.length">
-  <div *ngFor="let user of users$ | async">
-    <h4>{{ user.first_name }}</h4>
-    <h4>{{ user.last_name }}</h4>
-    <p>{{ user.email }}</p>
-    <p>{{ user.id }}</p>
-    <img [src]="user.id" />
-  </div>
-</ng-container>
-<h1>{{ isLoading$ | async }}</h1>
+<router-outlet></router-outlet>

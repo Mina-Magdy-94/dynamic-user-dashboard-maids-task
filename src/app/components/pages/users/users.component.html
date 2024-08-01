@@ -1,0 +1,21 @@
+<div *ngIf="isLoading$ | async" class="loading-spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="!(isLoading$ | async)">
+  <div *ngIf="error$ | async as error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+  <div class="users-paginator-container">
+    <ul *ngIf="users$ | async as users" class="users-container">
+      <li class="card-container" *ngFor="let user of users">
+        <app-user-card [user]="user"></app-user-card>
+      </li>
+    </ul>
+    <app-paginator
+      *ngIf="users$ | async"
+      [pageSize]="paginationService.pageSize"
+      [length]="paginationService.totalNumberOfItems"
+      [pageIndex]="paginationService.pageIndex"
+    ></app-paginator>
+  </div>
+</div>

@@ -8,15 +8,37 @@ import { EffectsModule } from '@ngrx/effects';
 import { userReducer } from './store/users.reducer';
 import { UserEffects } from './store/users.effects';
 import { HttpClientModule } from '@angular/common/http';
+import { UsersComponent } from './components/pages/users/users.component';
+import { UserDetailsComponent } from './components/pages/user-details/user-details.component';
+import { NotFoundComponent } from './components/pages/not-found/not-found.component';
+import { NavbarComponent } from './components/UI/navbar/navbar.component';
+import { UserCardComponent } from './components/pages/users/user-card/user-card.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { PaginatorComponent } from './components/UI/paginator/paginator.component';
+import { MatPaginatorModule } from '@angular/material/paginator'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UsersComponent,
+    UserDetailsComponent,
+    NotFoundComponent,
+    NavbarComponent,
+    UserCardComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
     StoreModule.forRoot({ user: userReducer }),
     EffectsModule.forRoot([UserEffects]),
   ],
