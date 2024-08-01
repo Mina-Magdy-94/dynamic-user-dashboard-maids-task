@@ -10,7 +10,7 @@ import { loadUsers } from 'src/app/store/users.actions';
   styleUrls: ['./paginator.component.css']
 })
 export class PaginatorComponent {
-  @Input() length = 50;
+  @Input() length !: number
   @Input() pageSize!: number;
   @Input() pageIndex!: number;
   pageSizeOptions = [5, 10, 25];
@@ -30,7 +30,7 @@ export class PaginatorComponent {
     this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
-    this.store.dispatch(loadUsers({ page: this.pageIndex + 1 }));
+    this.store.dispatch(loadUsers({ pageNumber: this.pageIndex + 1 }));
   }
 
 }

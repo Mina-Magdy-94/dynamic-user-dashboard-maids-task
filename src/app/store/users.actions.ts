@@ -1,10 +1,10 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../models/user.model'
-import { PaginationInfo } from './users.reducer';
+import { User } from '../models/user.model';
+import { PaginationInfo } from '../models/pagination.model';
 
 export const loadUsers = createAction(
   '[User] Load Users',
-  props<{ page: number }>()
+  props<{ pageNumber: number }>()
 );
 
 export const loadUsersSuccess = createAction(
@@ -16,6 +16,3 @@ export const loadUsersFailure = createAction(
   '[User] Load Users Failure',
   props<{ error: string }>()
 );
-
-
-

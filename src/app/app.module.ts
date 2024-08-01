@@ -19,6 +19,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PaginatorComponent } from './components/UI/paginator/paginator.component';
 import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { ScaleOnHoverDirective } from './directives/scale-on-hover.directive';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { MatPaginatorModule } from '@angular/material/paginator'
     NotFoundComponent,
     NavbarComponent,
     UserCardComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    ScaleOnHoverDirective
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { MatPaginatorModule } from '@angular/material/paginator'
     MatButtonModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
+    MatToolbarModule,
     StoreModule.forRoot({ user: userReducer }),
     EffectsModule.forRoot([UserEffects]),
   ],

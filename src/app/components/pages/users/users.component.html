@@ -5,17 +5,17 @@
   <div *ngIf="error$ | async as error" class="error-message">
     <p>{{ error }}</p>
   </div>
-  <div class="users-paginator-container">
-    <ul *ngIf="users$ | async as users" class="users-container">
-      <li class="card-container" *ngFor="let user of users">
+  <div class="users-paginator-container" *ngIf="(usersToShow$ | async)?.length">
+    <ul class="users-container">
+      <li class="card-container" *ngFor="let user of usersToShow$ | async">
         <app-user-card [user]="user"></app-user-card>
       </li>
     </ul>
     <app-paginator
-      *ngIf="users$ | async"
-      [pageSize]="paginationService.pageSize"
-      [length]="paginationService.totalNumberOfItems"
-      [pageIndex]="paginationService.pageIndex"
+      *ngIf="currentPagination$ | async as pagination"
+      [pageSize]="pagination?.per_page ?? 0"
+      [length]="pagination?.total ?? 0"
+      [pageIndex]="(pagination?.page ?? 1) - 1"
     ></app-paginator>
   </div>
 </div>

@@ -1,53 +1,55 @@
 import { createReducer, on } from '@ngrx/store';
-// import * as UserActions from '../actions/user.actions';
+import { loadUsers, loadUsersSuccess, loadUsersFailure } from './users.actions';
 import { User } from '../models/user.model';
-import { loadUsers, loadUsersFailure, loadUsersSuccess } from './users.actions';
-
-
-
-export interface PaginationInfo {
-  page: number;
-  per_page: number;
-  total: number;
-  total_pages: number;
-}
+import { PaginationInfo } from '../models/pagination.model';
 
 export interface UserState {
+  allUsers: User[][];
   usersListToShow: User[];
-  pagination: PaginationInfo[];
+  paginationList: PaginationInfo[];
+  currentPagination: PaginationInfo | null;
   error: string | null;
   isLoading: boolean;
 }
 
-
 export const initialState: UserState = {
+  allUsers: [],
   usersListToShow: [],
-  pagination: [],
+  paginationList: [],
+  currentPagination: null,
   error: null,
-  isLoading: false
+  isLoading: false,
 };
 
-const _userReducer = createReducer(
+export const userReducer = createReducer(
   initialState,
-  on(loadUsers, state => ({
-    ...state,
-    isLoading: true,
-    error: null
-  })),
-  on(loadUsersSuccess, (state, { users, pagination }) => ({
-    ...state,
-    usersListToShow: users,
-    pagination: [...state.pagination, pagination],
-    isLoading: false
-  })),
+  on(loadUsers, (state) => ({ ...state, isLoading: true, error: null })),
+  on(loadUsersSuccess, (state, { users, pagination }) => {
+    let allUsers = [...state.allUsers]
+    let updatedPaginationList = [...state.paginationList]
+
+    const isPageFound = state.allUsers.some(usersOfCertainPage =>
+      usersOfCertainPage.some(user => user.id === users[0].id && user.first_name === users[0].first_name)
+    );
+
+    if (!isPageFound) {
+      allUsers = [...state.allUsers, users]
+      updatedPaginationList = [...state.paginationList, pagination]
+    }
+
+    return {
+      ...state,
+      allUsers,
+      usersListToShow: users,
+      paginationList: updatedPaginationList,
+      currentPagination: pagination,
+      isLoading: false,
+      error: null,
+    };
+  }),
   on(loadUsersFailure, (state, { error }) => ({
     ...state,
+    isLoading: false,
     error,
-    isLoading: false
-  })),
-
+  }))
 );
-
-export function userReducer(state: any, action: any) {
-  return _userReducer(state, action);
-}

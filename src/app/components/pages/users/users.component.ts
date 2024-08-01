@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AppState } from 'src/app/models/app-state.model';
+import { PaginationInfo } from 'src/app/models/pagination.model';
 import { User } from 'src/app/models/user.model';
-import { PaginationService } from 'src/app/services/pagination.service';
 import { loadUsers } from 'src/app/store/users.actions';
-import { selectAllUsers } from 'src/app/store/users.selectors';
+import { selectAllUsers, selectCurrentPagination, selectUsersToShow, selectPaginationList } from 'src/app/store/users.selectors';
 
 @Component({
   selector: 'app-users',
@@ -13,21 +13,32 @@ import { selectAllUsers } from 'src/app/store/users.selectors';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  users$: Observable<User[]>;
+  allUsers$: Observable<User[][]>;
+  usersToShow$: Observable<User[]>;
   isLoading$: Observable<boolean>;
   error$: Observable<string | null>;
 
+  paginationList$!: Observable<PaginationInfo[] | null>
+  currentPagination$!: Observable<PaginationInfo | null | undefined>
 
 
-  constructor(private store: Store<AppState>, public paginationService: PaginationService) {
-    this.users$ = this.store.select(selectAllUsers);
+
+  constructor(private store: Store<AppState>) {
+    this.usersToShow$ = this.store.select(selectUsersToShow);
+    this.allUsers$ = this.store.select(selectAllUsers);
     this.isLoading$ = this.store.select(state => state.user.isLoading);
     this.error$ = this.store.select(state => state.user.error);
+    this.paginationList$ = this.store.select(selectPaginationList);
+    this.currentPagination$ = this.store.select(selectCurrentPagination);
+    // this.paginationSubscription = this.store.select(paginationState).subscribe((state) => {
+    //   this.pagination$ = state
+    // });
+
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadUsers({ page: 1 }));
-    this.paginationService.assignPaginationData()
+    this.store.dispatch(loadUsers({ pageNumber: 1 }));
+    // this.paginationService.assignPaginationData()
   }
 
 
