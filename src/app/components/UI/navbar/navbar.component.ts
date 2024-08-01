@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../models/app-state.model';
+import { searchUsersById } from '../../../store/users.actions';
 
 @Component({
   selector: 'app-navbar',
@@ -8,10 +11,15 @@ import { filter } from 'rxjs';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  searchByIdInputValue: string = ''
+  searchByIdInputValue: string = '';
   id: string | null = null;
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private store: Store<AppState>
+  ) { }
+
   ngOnInit() {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -32,18 +40,17 @@ export class NavbarComponent implements OnInit {
   }
 
   backToUsersList() {
-    this.router.navigate(['users'])
+    this.router.navigate(['users']);
   }
 
   onInputAllowNumbersOnly(e: Event) {
     const input = e.target as HTMLInputElement;
     const inputValue = input.value;
-
     const filteredValue = inputValue.replace(/[^0-9]/g, '');
 
     this.searchByIdInputValue = filteredValue;
+    input.value = this.searchByIdInputValue;
 
-    input.value = this.searchByIdInputValue
-
+    this.store.dispatch(searchUsersById({ searchValue: this.searchByIdInputValue }));
   }
 }

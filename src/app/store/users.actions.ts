@@ -16,3 +16,8 @@ export const loadUsersFailure = createAction(
   '[User] Load Users Failure',
   props<{ error: string }>()
 );
+
+export const searchUsersById = createAction(
+  '[User] Search Users By Id',
+  props<{ searchValue: string }>()
+);

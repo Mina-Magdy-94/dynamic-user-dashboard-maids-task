@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { loadUsers, loadUsersSuccess, loadUsersFailure } from './users.actions';
+import { searchUsersById, loadUsers, loadUsersSuccess, loadUsersFailure } from './users.actions';
 import { User } from '../models/user.model';
 import { PaginationInfo } from '../models/pagination.model';
 
@@ -21,8 +21,28 @@ export const initialState: UserState = {
   isLoading: false,
 };
 
+
 export const userReducer = createReducer(
   initialState,
+  on(searchUsersById, (state, { searchValue }) => {
+    const filteredUsers = state.allUsers.flat().filter(user =>
+      user.id.toString().includes(searchValue)
+    );
+
+    if (filteredUsers.length > 0) {
+      return {
+        ...state,
+        usersListToShow: filteredUsers,
+        error: null
+      };
+    } else {
+      return {
+        ...state,
+        error: `No User with this id ${searchValue} exists`,
+        usersListToShow: []
+      };
+    }
+  }),
   on(loadUsers, (state) => ({ ...state, isLoading: true, error: null })),
   on(loadUsersSuccess, (state, { users, pagination }) => {
     let allUsers = [...state.allUsers]
